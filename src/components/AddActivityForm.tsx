@@ -2,18 +2,33 @@
 
 import React, { useState } from 'react';
 
-type AddActivityFormProps = {
-  onAddActivity: (activity: string, points: number) => void;
-};
-
-const AddActivityForm: React.FC<AddActivityFormProps> = ({ onAddActivity }) => {
+const AddActivityForm: React.FC = () => {
   const [newActivity, setNewActivity] = useState<string>("");
   const [newPoints, setNewPoints] = useState<number>(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newActivity && newPoints) {
-      onAddActivity(newActivity, newPoints);
+      try {
+        // 发送活动记录到服务器
+        await fetch('/api/points', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            action: 'addActivity', 
+            activity: newActivity, 
+            points: newPoints 
+          }),
+        });
+        
+        // 页面重新加载以显示更新后的数据
+        window.location.reload();
+      } catch (error) {
+        console.error('Failed to add activity:', error);
+      }
+      
       setNewActivity("");
       setNewPoints(0);
     }
