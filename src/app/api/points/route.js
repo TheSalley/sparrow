@@ -4,8 +4,8 @@ import { getUserPoints, updateUserPoints, addActivity, getActivities } from '../
 // 获取用户积分
 export async function GET() {
   try {
-    const points = getUserPoints();
-    const activities = getActivities();
+    const points = await getUserPoints();
+    const activities = await getActivities();
     return NextResponse.json({ points, activities });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch points' }, { status: 500 });
@@ -19,12 +19,12 @@ export async function POST(request) {
     const { action, points, activity } = body;
     
     if (action === 'updatePoints') {
-      updateUserPoints(points);
+      await updateUserPoints(points);
       return NextResponse.json({ success: true });
     }
     
     if (action === 'addActivity') {
-      addActivity(activity, points);
+      await addActivity(activity, points);
       return NextResponse.json({ success: true });
     }
     

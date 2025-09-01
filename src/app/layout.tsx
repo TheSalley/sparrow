@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Sparrow",
@@ -11,10 +12,39 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const menu = [
+    {
+      name: "首页",
+      href: "/",
+    },
+    {
+      name: "资产",
+      href: "/assets",
+    },
+    {
+      name: "自习室",
+      href: "/studyroom",
+    },
+    {
+      name: "我的",
+      href: "/my",
+    },
+  ];
+
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="bg-gray-100">
+      <body className="max-w-[375px] mx-auto py-11">
         {children}
+        <div className="home-nav w-[80%] flex justify-between mx-auto py-4 px-8">
+          {menu.map((item) => {
+            return (
+              <Link key={item.name} href={item.href}>
+                {item.name}
+              </Link>
+            )
+          })}
+        </div>
       </body>
     </html>
   );

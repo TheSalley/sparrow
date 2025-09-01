@@ -4,7 +4,7 @@ import React from 'react';
 
 type Activity = {
   activity: string;
-  points: number;
+  point: number;
 };
 
 type ActivityListProps = {
@@ -20,7 +20,7 @@ const ActivityList: React.FC<ActivityListProps> = ({ activities }) => {
           {activities.map((activity, index) => (
             <li key={index} className="flex justify-between">
               <span>{activity.activity}</span>
-              <span className="text-green-500">+{activity.points}</span>
+              <span className="text-green-500">+{activity.point}</span>
             </li>
           ))}
         </ul>

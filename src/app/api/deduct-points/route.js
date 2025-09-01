@@ -5,13 +5,13 @@ import { getUserPoints, updateUserPoints } from '../../../../lib/db';
 export async function POST() {
   try {
     // 获取当前积分
-    const currentPoints = getUserPoints();
+    const currentPoints = await getUserPoints();
     
     // 扣除30分
     const newPoints = currentPoints - 30;
     
     // 更新积分
-    updateUserPoints(newPoints);
+    await updateUserPoints(newPoints);
     
     return NextResponse.json({ success: true, points: newPoints });
   } catch (error) {

@@ -6,8 +6,9 @@ import { getUserPoints, getActivities } from '../../../lib/db';
 // 服务端获取数据
 const getData = async () => {
   try {
-    const points = getUserPoints();
-    const activities = getActivities();
+    const points = await getUserPoints();
+    const activities = await getActivities();
+    console.log("@@@", activities,  points)
     return { points, activities };
   } catch (error) {
     console.error('Failed to fetch data:', error);
