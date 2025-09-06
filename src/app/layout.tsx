@@ -27,6 +27,10 @@ export default function RootLayout({
       href: "/studyroom",
     },
     {
+      name: "积分",
+      href: "/points",
+    },
+    {
       name: "我的",
       href: "/my",
     },
