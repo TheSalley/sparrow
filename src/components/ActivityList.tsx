@@ -20,7 +20,7 @@ const ActivityList: React.FC<ActivityListProps> = ({ activities }) => {
           {activities.map((activity, index) => (
             <li key={index} className="flex justify-between">
               <span>{activity.activity}</span>
-              <span className="text-green-500">+{activity.point}</span>
+              <span className="text-green-500">{activity.point}</span>
             </li>
           ))}
         </ul>

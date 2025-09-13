@@ -23,10 +23,28 @@ const AddActivityForm: React.FC = () => {
           }),
         });
         
+        // 获取当前积分并计算新的总积分
+        const response = await fetch('/api/points');
+        const data = await response.json();
+        const currentPoints = data.points || 0;
+        const newTotalPoints = currentPoints + newPoints;
+        
+        // 更新总积分
+        await fetch('/api/points', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            action: 'updatePoints', 
+            points: newTotalPoints 
+          }),
+        });
+        
         // 页面重新加载以显示更新后的数据
         window.location.reload();
       } catch (error) {
-        console.error('Failed to add activity:', error);
+        console.error('Failed to add activity or update points:', error);
       }
       
       setNewActivity("");
