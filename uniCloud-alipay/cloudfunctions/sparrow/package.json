@@ -1,0 +1,7 @@
+{
+  "name": "sparrow",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
