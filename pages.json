@@ -13,12 +13,6 @@
 			}
 		},
 		{
-			"path": "pages/cart/cart",
-			"style": {
-				"navigationBarTitleText": "购物车"
-			}
-		},
-		{
 			"path": "pages/profile/profile",
 			"style": {
 				"navigationBarTitleText": "我的"
@@ -26,9 +20,9 @@
 		}
 	],
 	"tabBar": {
-		"color": "#666666",
-		"selectedColor": "#007AFF",
-		"backgroundColor": "#ffffff",
+		"color": "#999999",
+		"selectedColor": "#000000",
+		"backgroundColor": "#FFFFFF",
 		"borderStyle": "black",
 		"list": [
 			{
@@ -44,12 +38,6 @@
 				"selectedIconPath": "static/tabbar/category-active.png"
 			},
 			{
-				"pagePath": "pages/cart/cart",
-				"text": "购物车",
-				"iconPath": "static/tabbar/cart.png",
-				"selectedIconPath": "static/tabbar/cart-active.png"
-			},
-			{
 				"pagePath": "pages/profile/profile",
 				"text": "我的",
 				"iconPath": "static/tabbar/profile.png",
@@ -59,9 +47,9 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "Sparrow",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTitleText": "极简麻雀",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FAFAFA"
 	},
 	"uniIdRouter": {}
 }

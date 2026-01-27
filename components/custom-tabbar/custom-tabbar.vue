@@ -8,9 +8,9 @@
 			@click="switchTab(index, item.pagePath)"
 		>
 			<view class="tabbar-icon">
-				<uni-icons :type="item.icon" :size="24" :color="currentIndex === index ? '#007AFF' : '#666666'"></uni-icons>
+				<uni-icons :type="item.icon" :size="22" :color="currentIndex === index ? '#000000' : '#999999'"></uni-icons>
 			</view>
-			<text class="tabbar-text" :style="{ color: currentIndex === index ? '#007AFF' : '#666666' }">{{ item.text }}</text>
+			<text class="tabbar-text" :style="{ color: currentIndex === index ? '#000000' : '#999999' }">{{ item.text }}</text>
 		</view>
 	</view>
 </template>
@@ -30,11 +30,6 @@ const tabList = ref([
 		pagePath: '/pages/category/category',
 		text: '分类',
 		icon: 'bars'
-	},
-	{
-		pagePath: '/pages/cart/cart',
-		text: '购物车',
-		icon: 'cart'
 	},
 	{
 		pagePath: '/pages/profile/profile',
@@ -86,11 +81,12 @@ onUpdated(() => {
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	height: 100rpx;
-	background-color: #ffffff;
-	border-top: 1rpx solid #f0f0f0;
+	height: 110rpx;
+	background-color: #FFFFFF;
+	border-top: 1rpx solid #E5E5E5;
 	z-index: 999;
 	padding-bottom: env(safe-area-inset-bottom);
+	box-shadow: 0 -2rpx 20rpx rgba(0, 0, 0, 0.02);
 }
 
 .tabbar-item {
@@ -104,7 +100,7 @@ onUpdated(() => {
 }
 
 .tabbar-item.active {
-	color: #007AFF;
+	color: #000000;
 }
 
 .tabbar-icon {
@@ -114,6 +110,8 @@ onUpdated(() => {
 .tabbar-text {
 	font-size: 20rpx;
 	line-height: 1;
+	font-weight: 400;
+	letter-spacing: 0.5rpx;
 }
 
 .tabbar-item:active {
