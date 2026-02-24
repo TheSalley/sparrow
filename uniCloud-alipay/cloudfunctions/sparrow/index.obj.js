@@ -31,7 +31,23 @@ module.exports = {
 		const dbJQL = uniCloud.databaseForJQL({
 			clientInfo: this.getClientInfo()
 		})
-		const res = await dbJQL.collection('sparrow_data').get();
+		const res = await dbJQL.collection('sparrow_data')
+			.where('id != 0')
+			.get();
+		return {
+			code: 200,
+			data: res.data
+		}
+	},
+	
+	async getCategories() {
+		const dbJQL = uniCloud.databaseForJQL({
+			clientInfo: this.getClientInfo()
+		})
+		const res = await dbJQL.collection('sparrow_category')
+			.orderBy('sort', 'asc')
+			.limit(5)
+			.get();
 		return {
 			code: 200,
 			data: res.data

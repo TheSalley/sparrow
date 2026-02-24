@@ -1,43 +1,56 @@
 <template>
 	<view class="page-container">
-		<!-- 用户信息区域 -->
-		<view class="user-section">
-			<view class="avatar-wrapper">
-				<view class="avatar">
-					<uni-icons type="person-filled" size="48" color="#CCCCCC"></uni-icons>
+		<!-- 顶部深色背景区域 -->
+		<view class="home-banner">
+			<view class="header-title">我的</view>
+			<!-- 个人资料区域 -->
+			<view class="profile-section">
+				<view class="avatar-container">
+					<image class="avatar" src="/static/logo.png" mode="aspectFill"></image>
+					<view class="avatar-edit">
+						<uni-icons type="camera" size="20" color="#FFFFFF"></uni-icons>
+					</view>
 				</view>
-			</view>
-			<text class="username">The Shire</text>
-			<text class="user-desc">记录生活中的每一件物品</text>
-		</view>
-
-		<!-- 统计信息 -->
-		<view class="stats-section">
-			<view class="stat-item">
-				<text class="stat-number">{{ totalItems }}</text>
-				<text class="stat-label">物品总数</text>
-			</view>
-			<view class="stat-divider"></view>
-			<view class="stat-item">
-				<text class="stat-number">{{ totalCategories }}</text>
-				<text class="stat-label">分类数量</text>
+				<text class="username">TheShire</text>
+				<text class="email">theshire7@qq.com</text>
 			</view>
 		</view>
 
-		<!-- 功能菜单 -->
-		<view class="menu-section">
-			<view 
-				class="menu-item" 
-				v-for="(item, index) in menuList" 
-				:key="index"
-				@click="handleMenuClick(item)"
-			>
-				<view class="menu-icon-wrapper">
-					<uni-icons :type="item.icon" size="24" :color="item.color"></uni-icons>
+
+
+		<!-- 主要内容区域 - 白色卡片 -->
+		<view class="content-card">
+			<!-- 账户部分 -->
+			<view class="section">
+				<view class="section-title">账户</view>
+				<view class="menu-item" v-for="(item, index) in accountMenu" :key="index"
+					@click="handleMenuClick(item)">
+					<view class="menu-icon">
+						<uni-icons :type="item.icon" size="22" :color="item.color"></uni-icons>
+					</view>
+					<view class="menu-content">
+						<text class="menu-title">{{ item.title }}</text>
+						<text class="menu-desc">{{ item.desc }}</text>
+					</view>
+					<uni-icons type="right" size="18" color="#CCCCCC"></uni-icons>
 				</view>
-				<text class="menu-text">{{ item.name }}</text>
-				<uni-icons type="right" size="18" color="#CCCCCC"></uni-icons>
 			</view>
+
+			<!-- 更多部分 -->
+			<!-- <view class="section">
+				<view class="section-title">更多</view>
+				<view class="menu-item" v-for="(item, index) in moreMenu" :key="index" @click="handleMenuClick(item)"
+					:class="{ 'logout-item': item.isLogout }">
+					<view class="menu-icon">
+						<uni-icons :type="item.icon" size="22" :color="item.color"></uni-icons>
+					</view>
+					<view class="menu-content">
+						<text class="menu-title" :class="{ 'logout-text': item.isLogout }">{{ item.title }}</text>
+						<text class="menu-desc" v-if="item.desc">{{ item.desc }}</text>
+					</view>
+					<uni-icons type="right" size="18" :color="item.isLogout ? '#FF3B30' : '#CCCCCC'"></uni-icons>
+				</view>
+			</view> -->
 		</view>
 
 		<custom-tabbar />
@@ -45,154 +58,216 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import CustomTabbar from "../../components/custom-tabbar/custom-tabbar.vue"
+	import {
+		ref
+	} from 'vue'
+	import CustomTabbar from "../../components/custom-tabbar/custom-tabbar.vue"
 
-const totalItems = ref(40)
-const totalCategories = ref(8)
+	// 账户菜单
+	const accountMenu = ref([{
+			title: '个人信息',
+			desc: '姓名、电子邮件地址、电话号码...',
+			icon: 'person',
+			color: '#000000'
+		},
+		{
+			title: '账号密码',
+			desc: '••••••••••',
+			icon: 'locked-filled',
+			color: '#000000'
+		},
+		{
+			title: '银行卡',
+			desc: '银行卡、信用卡',
+			icon: 'location',
+			color: '#000000'
+		}
+	])
 
-const menuList = ref([
-	{
-		name: '设置',
-		icon: 'gear',
-		color: '#000000'
-	},
-	{
-		name: '关于',
-		icon: 'info',
-		color: '#333333'
-	},
-	{
-		name: '帮助与反馈',
-		icon: 'chatbubble',
-		color: '#666666'
+	// 更多菜单
+	const moreMenu = ref([{
+			title: '帮助中心',
+			desc: '有什么问题请联系客服处理',
+			icon: 'chatbubble-filled',
+			color: '#000000'
+		},
+		{
+			title: '条款和条件',
+			desc: '我们的服务',
+			icon: 'info-filled',
+			color: '#000000'
+		},
+		{
+			title: '退出登录',
+			desc: '',
+			icon: 'closeempty',
+			color: '#FF3B30',
+			isLogout: true
+		}
+	])
+
+	const handleMenuClick = (item) => {
+		console.log('点击菜单:', item)
+		if (item.isLogout) {
+			uni.showModal({
+				title: '提示',
+				content: '确定要退出登录吗？',
+				success: (res) => {
+					if (res.confirm) {
+						console.log('退出登录')
+						// 这里可以添加退出登录的逻辑
+					}
+				}
+			})
+		}
 	}
-])
-
-const handleMenuClick = (item) => {
-	console.log('点击菜单:', item)
-}
 </script>
 
 <style scoped>
-.page-container {
-	min-height: 100vh;
-	background-color: #FAFAFA;
-	padding-bottom: 140rpx;
-}
+	.page-container {
+		min-height: 100vh;
+		background-color: #FAFAFA;
+		padding-bottom: 140rpx;
+	}
 
-/* 用户信息区域 */
-.user-section {
-	background-color: #FFFFFF;
-	padding: 80rpx 48rpx 60rpx;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border-bottom: 1rpx solid #F0F0F0;
-}
+	.home-banner {
+		background: url("/static/Ornament.png") no-repeat center/cover;
+		min-height: 800rpx;
+		padding-top: 80rpx;
+		padding-inline: 48rpx;
+		color: #FFFFFF;
+	}
 
-.avatar-wrapper {
-	margin-bottom: 32rpx;
-}
+	.header-title {
+		font-size: 40rpx;
+		font-weight: 700;
+		color: #FFFFFF;
+		text-align: center;
+	}
 
-.avatar {
-	width: 160rpx;
-	height: 160rpx;
-	border-radius: 80rpx;
-	background-color: #F5F5F5;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border: 2rpx solid #E5E5E5;
-}
+	/* 个人资料区域 */
+	.profile-section {
+		margin-top: 32rpx;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: relative;
+	}
 
-.username {
-	font-size: 40rpx;
-	font-weight: 600;
-	color: #000000;
-	margin-bottom: 12rpx;
-	letter-spacing: 1rpx;
-}
+	.avatar-container {
+		position: relative;
+		margin-bottom: 32rpx;
+	}
 
-.user-desc {
-	font-size: 24rpx;
-	color: #999999;
-	font-weight: 300;
-	letter-spacing: 0.5rpx;
-}
+	.avatar {
+		width: 160rpx;
+		height: 160rpx;
+		border-radius: 80rpx;
+		border: 4rpx solid #FFFFFF;
+		background-color: #F5F5F5;
+	}
 
-/* 统计信息 */
-.stats-section {
-	background-color: #FFFFFF;
-	margin-top: 24rpx;
-	padding: 48rpx 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-bottom: 1rpx solid #F0F0F0;
-}
+	.avatar-edit {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 48rpx;
+		height: 48rpx;
+		border-radius: 24rpx;
+		background-color: #FF9500;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 3rpx solid #FFFFFF;
+	}
 
-.stat-item {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	flex: 1;
-}
+	.username {
+		font-size: 40rpx;
+		font-weight: 600;
+		color: #FFFFFF;
+		margin-bottom: 12rpx;
+		letter-spacing: 1rpx;
+	}
 
-.stat-number {
-	font-size: 48rpx;
-	font-weight: 600;
-	color: #000000;
-	margin-bottom: 8rpx;
-	letter-spacing: 1rpx;
-}
+	.email {
+		font-size: 28rpx;
+		color: rgba(255, 255, 255, 0.8);
+		font-weight: 400;
+		letter-spacing: 0.5rpx;
+	}
 
-.stat-label {
-	font-size: 24rpx;
-	color: #999999;
-	font-weight: 400;
-}
+	/* 主要内容卡片 */
+	.content-card {
+		background-color: #FFFFFF;
+		margin: -280rpx 48rpx 0;
+		border-radius: 36rpx;
+		padding: 48rpx 0;
+		box-shadow: 0px 16px 70px  rgba(8, 16, 31, 0.04);
+	}
 
-.stat-divider {
-	width: 1rpx;
-	height: 60rpx;
-	background-color: #E5E5E5;
-}
+	.section {
+		margin-bottom: 48rpx;
+	}
 
-/* 功能菜单 */
-.menu-section {
-	background-color: #FFFFFF;
-	margin-top: 24rpx;
-	padding: 16rpx 0;
-}
+	.section:last-child {
+		margin-bottom: 0;
+	}
 
-.menu-item {
-	display: flex;
-	align-items: center;
-	padding: 32rpx 48rpx;
-	transition: background-color 0.3s ease;
-}
+	.section-title {
+		font-size: 32rpx;
+		font-weight: 600;
+		color: #000000;
+		padding: 0 48rpx 24rpx;
+		letter-spacing: 1rpx;
+	}
 
-.menu-item:active {
-	background-color: #FAFAFA;
-}
+	.menu-item {
+		display: flex;
+		align-items: center;
+		padding: 32rpx 48rpx;
+		transition: background-color 0.2s ease;
+	}
 
-.menu-icon-wrapper {
-	width: 64rpx;
-	height: 64rpx;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: #F5F5F5;
-	border-radius: 12rpx;
-	margin-right: 24rpx;
-}
+	.menu-item:active {
+		background-color: #FAFAFA;
+	}
 
-.menu-text {
-	flex: 1;
-	font-size: 30rpx;
-	color: #000000;
-	font-weight: 400;
-	letter-spacing: 0.5rpx;
-}
+	.menu-item.logout-item:active {
+		background-color: #FFF5F5;
+	}
+
+	.menu-icon {
+		width: 48rpx;
+		height: 48rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-right: 24rpx;
+	}
+
+	.menu-content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.menu-title {
+		font-size: 30rpx;
+		color: #000000;
+		font-weight: 500;
+		margin-bottom: 8rpx;
+		letter-spacing: 0.5rpx;
+	}
+
+	.menu-title.logout-text {
+		color: #FF3B30;
+	}
+
+	.menu-desc {
+		font-size: 24rpx;
+		color: #999999;
+		font-weight: 400;
+		line-height: 1.4;
+		letter-spacing: 0.5rpx;
+	}
 </style>
